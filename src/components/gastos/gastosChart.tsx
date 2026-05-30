@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/chart";
 import { fechaSinDia } from "@/helpers/formatoFecha";
 import { useMobile } from "@/hooks/useMobile";
-import { formatoDivisa } from "@/helpers/formatoDivisa";
 
 type UltimosGastosType = {
   categoria: string;

@@ -4,14 +4,18 @@ import GastosChart from "@/components/gastos/gastosChart";
 import ProgresoMetas from "@/components/metas/progresoMetas";
 import { Label } from "@/components/ui/label";
 import EstadoPresupuestos from "@/components/presupuestos/estadoPresupuestos";
+import { useMobile } from "@/hooks/useMobile";
 
 function Resumen() {
+  const isMobile = useMobile();
   return (
     <div>
-      <Label className="text-xl font-semibold p-4 justify-center">
-        Resumen
-      </Label>
-      <div className="grid-page">
+      {isMobile && (
+        <Label className="text-xl font-semibold p-4 justify-center">
+          Resumen
+        </Label>
+      )}
+      <div className="grid-page mt-8">
         <SaldoCard />
         <GastosChart />
         <ProgresoMetas />

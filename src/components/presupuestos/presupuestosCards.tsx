@@ -93,7 +93,7 @@ function PresupuestosCards() {
   }, [cartera]);
   return (
     <div>
-      <div className="flex justify-end p-4">
+      <div className="flex justify-end p-4 mt-8">
         <NuevoPresupuesto obtenerPresupuestos={obtenerPresupuestos} />
       </div>
       {presupuestos?.length === 0 && (

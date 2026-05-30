@@ -6,8 +6,10 @@ import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
 import { fechaSinDia } from "@/helpers/formatoFecha";
 import { Spinner } from "@/components/ui/spinner";
+import { useMobile } from "@/hooks/useMobile";
 
 function Analisis() {
+  const isMobile = useMobile();
   const reporteRef = useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = useState(false);
   const exportarPDF = async () => {
@@ -57,10 +59,12 @@ function Analisis() {
   };
   return (
     <div className="flex flex-col items-center">
-      <Label className="text-xl font-semibold p-4 justify-center">
-        Analisis
-      </Label>
-      <div className="flex justify-end w-204 py-4">
+      {isMobile && (
+        <Label className="text-xl font-semibold p-4 justify-center">
+          Analisis
+        </Label>
+      )}
+      <div className="flex justify-end w-204 py-4 mt-8">
         <Button variant="secondary" onClick={exportarPDF}>
           {loading && <Spinner data-icon="inline-start" />}
           {loading ? "Generando" : "Exportar PDF"}

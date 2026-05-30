@@ -56,7 +56,7 @@ function BarraPeriodo({ setMovimientos }: Props) {
     }
   };
   return (
-    <div className="w-full flex flex-col md:flex-row gap-4 justify-evenly p-4">
+    <div className="w-full flex flex-col md:flex-row gap-4 justify-evenly p-4 mt-8">
       <div className="flex gap-2 justify-between max-w-1/2">
         <Label>Fecha de inicio:</Label>
         <InputCalendario value={inicio} onChange={setInicio} />

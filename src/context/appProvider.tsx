@@ -3,14 +3,14 @@ import type { ReactNode } from "react";
 import { AppContext } from "./appContext";
 import type { CategoriasType, ResumenCuentasType, MetasType } from "@/types";
 import { apiRequest } from "@/api/api";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 type ProviderProps = {
   children: ReactNode;
 };
 
 function AppProvider({ children }: ProviderProps) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [categorias, setCategorias] = useState<CategoriasType[]>(() => {
     const listaCategorias = localStorage.getItem("categorias");
     return listaCategorias ? JSON.parse(listaCategorias) : [];
@@ -21,46 +21,49 @@ function AppProvider({ children }: ProviderProps) {
   const obtenerCuentas = async () => {
     const resultado = await apiRequest("GET", "cuentas");
     if (resultado.success) {
-      setCuentas(resultado.data);
+      setCuentas(resultado.data.result);
     } else {
       console.log("Error al obtener cuentas:");
       console.error(resultado.data);
-      if (
-        resultado.data.message === "Sesion no iniciada" ||
-        resultado.data.message === "Sesion expirada"
-      )
-        navigate("/login");
+      // if (
+      //   resultado.data.message === "Sesion no iniciada" ||
+      //   resultado.data.message === "Sesion expirada"
+      // )
+      //   navigate("/login");
     }
   };
   const obtenerCategorias = async () => {
     if (categorias.length === 0) {
       const resultado = await apiRequest("GET", "categorias");
       if (resultado.success) {
-        setCategorias(resultado.data);
-        localStorage.setItem("categorias", JSON.stringify(resultado.data));
+        setCategorias(resultado.data.result);
+        localStorage.setItem(
+          "categorias",
+          JSON.stringify(resultado.data.result),
+        );
       } else {
         console.log("Error al obtener categorias:");
-        console.error(resultado.data);
-        if (
-          resultado.data.message === "Sesion no iniciada" ||
-          resultado.data.message === "Sesion expirada"
-        )
-          navigate("/login");
+        console.error(resultado.data.result);
+        // if (
+        //   resultado.data.message === "Sesion no iniciada" ||
+        //   resultado.data.message === "Sesion expirada"
+        // )
+        //   navigate("/login");
       }
     }
   };
   const obtenerMetas = async () => {
     const resultado = await apiRequest("GET", "metas");
     if (resultado.success) {
-      setMetas(resultado.data);
+      setMetas(resultado.data.result);
     } else {
       console.log("Error al obtener metas:");
       console.error(resultado.data);
-      if (
-        resultado.data.message === "Sesion no iniciada" ||
-        resultado.data.message === "Sesion expirada"
-      )
-        navigate("/login");
+      // if (
+      //   resultado.data.message === "Sesion no iniciada" ||
+      //   resultado.data.message === "Sesion expirada"
+      // )
+      //   navigate("/login");
     }
   };
   useEffect(() => {
@@ -81,7 +84,7 @@ function AppProvider({ children }: ProviderProps) {
         cuentas,
         setCuentas,
         obtenerCuentas,
-        obtenerCategorias,
+        // obtenerCategorias,
         metas,
         setMetas,
         obtenerMetas,

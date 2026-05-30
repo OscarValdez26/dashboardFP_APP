@@ -41,7 +41,7 @@ import { apiRequest } from "@/api/api";
 
 type Props = {
   presupuesto: PresupuestosType;
-  obtenerPresupuestos: () => void;
+  obtenerDatos: () => Promise<void>;
 };
 
 const updatePresupuestoSchema = z.object({
@@ -52,7 +52,7 @@ const updatePresupuestoSchema = z.object({
 
 type UpdatePresupuestoForm = z.infer<typeof updatePresupuestoSchema>;
 
-function EditarPresupuesto({ presupuesto, obtenerPresupuestos }: Props) {
+function EditarPresupuesto({ presupuesto, obtenerDatos }: Props) {
   const [open, setOpen] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const { categorias } = useAppContext();
@@ -92,7 +92,7 @@ function EditarPresupuesto({ presupuesto, obtenerPresupuestos }: Props) {
     );
     if (resultado.success) {
       alert(resultado.data.message);
-      await obtenerPresupuestos();
+      await obtenerDatos();
       setOpen(false);
     } else {
       setMensaje(resultado.data.message);
@@ -110,7 +110,7 @@ function EditarPresupuesto({ presupuesto, obtenerPresupuestos }: Props) {
       json,
     );
     setMensaje(resultado.data.message);
-    await obtenerPresupuestos();
+    await obtenerDatos();
   };
   const tipo = useWatch({
     control,

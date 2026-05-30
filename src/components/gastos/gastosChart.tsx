@@ -85,6 +85,7 @@ function GastosChart() {
                 data={chartData}
                 dataKey="totalGastado"
                 nameKey="categoria"
+                isAnimationActive={false}
               />
               <ChartLegend
                 content={<ChartLegendContent nameKey="categoria" />}

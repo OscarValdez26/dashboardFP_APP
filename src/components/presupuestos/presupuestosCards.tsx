@@ -122,7 +122,7 @@ function PresupuestosCards() {
                 <CardAction>
                   <EditarPresupuesto
                     presupuesto={presupuesto}
-                    obtenerPresupuestos={obtenerPresupuestos}
+                    obtenerDatos={obtenerDatos}
                   />
                 </CardAction>
               </CardHeader>

@@ -17,6 +17,8 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart";
 import { fechaSinDia } from "@/helpers/formatoFecha";
+import { useMobile } from "@/hooks/useMobile";
+import { formatoDivisa } from "@/helpers/formatoDivisa";
 
 type UltimosGastosType = {
   categoria: string;
@@ -33,7 +35,7 @@ type DatosChartType = {
 function GastosChart() {
   const [chartData, setChartData] = useState<DatosChartType[]>([]);
   const [chartConfig, setChartConfig] = useState<ChartConfig>({});
-
+  const isMobile = useMobile();
   useEffect(() => {
     const obtenerGastos = async () => {
       const resultado = await apiRequest("GET", "movimientos/gastos");
@@ -69,23 +71,24 @@ function GastosChart() {
         {chartData.length > 0 && (
           <ChartContainer
             config={chartConfig}
-            className="mx-auto aspect-square max-h-75"
+            className="mx-auto aspect-square h-70"
           >
             <PieChart>
-              <ChartTooltip
-                content={
-                  <ChartTooltipContent
-                    nameKey="categoria"
-                    hideLabel
-                    className="w-42"
-                  />
-                }
-              />
+              {!isMobile && (
+                <ChartTooltip
+                  content={
+                    <ChartTooltipContent
+                      nameKey="categoria"
+                      hideLabel
+                      className="w-42"
+                    />
+                  }
+                />
+              )}
               <Pie
                 data={chartData}
                 dataKey="totalGastado"
                 nameKey="categoria"
-                isAnimationActive={false}
               />
               <ChartLegend
                 content={<ChartLegendContent nameKey="categoria" />}
@@ -94,6 +97,23 @@ function GastosChart() {
             </PieChart>
           </ChartContainer>
         )}
+        {/* <div className="flex flex-col gap-2 text-sm">
+          {chartData.map((item) => (
+            <div
+              key={item.categoria}
+              className="flex flex-nowrap items-center gap-2"
+            >
+              <div
+                className="h-3 w-3 rounded-xs"
+                style={{
+                  backgroundColor: `var(--color-${item.categoria})`,
+                }}
+              />
+
+              <span>{`${item.categoria}: ${formatoDivisa(item.totalGastado)}`}</span>
+            </div>
+          ))}
+        </div> */}
         {chartData.length === 0 && (
           <div className="w-full h-full flex justify-center items-center font-normal">
             Sin datos

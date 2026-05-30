@@ -1,3 +1,5 @@
+import type { IconosType } from "@/lib/iconos";
+
 export type MetasType = {
   idMeta: number;
   idCuenta: number;
@@ -7,6 +9,6 @@ export type MetasType = {
   fechaLimite: string;
   saldo: string;
   objetivo: string;
-  icono?: string;
+  icono?: IconosType;
   progreso: string;
 };

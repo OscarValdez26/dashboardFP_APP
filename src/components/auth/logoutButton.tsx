@@ -10,18 +10,14 @@ function LogoutButton() {
   const { setCategorias, setCuentas, setMetas } = useAppContext();
   const navigate = useNavigate();
   const logout = async () => {
-    const respuesta = await apiRequest("POST", "usuarios/logout", {});
-    if (respuesta.success) {
-      setUser(null);
-      setCategorias(null);
-      setCuentas(null);
-      setMetas(null);
-      localStorage.clear();
-      clearAccessToken();
-      navigate("/login");
-    } else {
-      console.log(respuesta.data);
-    }
+    await apiRequest("POST", "usuarios/logout", {});
+    setUser(null);
+    setCategorias([]);
+    setCuentas([]);
+    setMetas([]);
+    localStorage.clear();
+    clearAccessToken();
+    navigate("/login");
   };
   return (
     <Button

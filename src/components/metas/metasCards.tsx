@@ -1,7 +1,7 @@
 import { Progress } from "@/components/ui/progress";
 import { formatoDivisa } from "@/helpers/formatoDivisa";
 import { fechaCorta } from "@/helpers/formatoFecha";
-import { iconos } from "@/lib/iconos";
+import { iconos, type IconosType } from "@/lib/iconos";
 import {
   Card,
   CardAction,
@@ -19,8 +19,7 @@ import EditarMeta from "@/components/metas/editarMeta";
 
 function MetasCards() {
   const { metas } = useAppContext();
-  const getIcono = (iconoMeta: string) => {
-    if (iconoMeta === "") return;
+  const getIcono = (iconoMeta: IconosType) => {
     const Icon = iconos[iconoMeta];
     return <Icon />;
   };
@@ -44,7 +43,7 @@ function MetasCards() {
             <Card className="card-principal" key={meta.idMeta}>
               <CardHeader>
                 <CardTitle className="flex gap-4">
-                  {getIcono(meta.icono)}
+                  {meta.icono && getIcono(meta.icono)}
                   <span>{meta.nombre}</span>
                 </CardTitle>
                 <CardDescription className="text-xs">

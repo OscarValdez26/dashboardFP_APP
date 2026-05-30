@@ -2,10 +2,19 @@ import ButtonSort from "@/components/generic/buttonSort";
 import { Badge } from "@/components/ui/badge";
 import { formatoDivisa } from "@/helpers/formatoDivisa";
 import { fechaHora } from "@/helpers/formatoFecha";
-import type { MovimientosType } from "@/types/movimientos";
 import type { ColumnDef } from "@tanstack/react-table";
 
-export const columnas: ColumnDef<MovimientosType>[] = [
+type DatosTablaType = {
+  cuenta: string;
+  tipoMovimiento: string;
+  categoriaMovimiento: string;
+  descripcionMovimiento: string;
+  cantidadMovimiento: string;
+  fechaMovimiento: string;
+  color?: string;
+};
+
+export const columnas: ColumnDef<DatosTablaType>[] = [
   {
     accessorKey: "cuenta",
     header: ({ column }) => {

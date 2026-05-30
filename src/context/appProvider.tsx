@@ -11,12 +11,12 @@ type ProviderProps = {
 
 function AppProvider({ children }: ProviderProps) {
   const navigate = useNavigate();
-  const [categorias, setCategorias] = useState<CategoriasType[] | null>(() => {
+  const [categorias, setCategorias] = useState<CategoriasType[]>(() => {
     const listaCategorias = localStorage.getItem("categorias");
-    return listaCategorias ? JSON.parse(listaCategorias) : null;
+    return listaCategorias ? JSON.parse(listaCategorias) : [];
   });
   const [metas, setMetas] = useState<MetasType[]>([]);
-  const [cuentas, setCuentas] = useState<ResumenCuentasType[] | null>(null);
+  const [cuentas, setCuentas] = useState<ResumenCuentasType[]>([]);
 
   const obtenerCuentas = async () => {
     const resultado = await apiRequest("GET", "cuentas");
@@ -33,7 +33,7 @@ function AppProvider({ children }: ProviderProps) {
     }
   };
   const obtenerCategorias = async () => {
-    if (categorias === null) {
+    if (categorias.length === 0) {
       const resultado = await apiRequest("GET", "categorias");
       if (resultado.success) {
         setCategorias(resultado.data);

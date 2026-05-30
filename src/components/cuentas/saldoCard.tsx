@@ -41,7 +41,7 @@ export function SaldoCard() {
   }, [datos.porcentaje, datos.tipo]);
   const changeData = () => {
     setIndice((prev) => {
-      if (prev === cuentas?.length - 1) {
+      if (prev === cuentas.length - 1) {
         return 0;
       }
       return prev + 1;

@@ -12,7 +12,19 @@ type Gastos = {
   totalGastado: string;
 };
 
-function PresupuestosReporte({ setPresupuestoTop }) {
+type Props = {
+  setPresupuestoTop: React.Dispatch<React.SetStateAction<PresupuestoTop>>;
+};
+
+type PresupuestoTop = {
+  idPresupuesto: number;
+  categoria: string;
+  tipoPresupuesto: "monto" | "porcentaje";
+  cantidadPresupuesto: string;
+  porcentaje: number;
+};
+
+function PresupuestosReporte({ setPresupuestoTop }: Props) {
   const { cuentas } = useAppContext();
   const [presupuestos, setPresupuestos] = useState<PresupuestosType[]>([]);
   const [gastos, setGastos] = useState<Gastos[] | null>(null);

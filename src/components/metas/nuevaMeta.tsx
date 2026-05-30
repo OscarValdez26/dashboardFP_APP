@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 import IconSelector from "@/components/generic/iconSelector";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
-import { iconos } from "@/lib/iconos";
+import { iconos, type IconosType } from "@/lib/iconos";
 import InputCalendario from "@/components/generic/inputCalendario";
 import { apiRequest } from "@/api/api";
 import { useAppContext } from "@/context/useAppContext";
@@ -85,11 +85,10 @@ function NuevaMeta() {
       setMensaje(resultado.data.message);
     }
   };
-  const iconoSeleccionado =
-    useWatch({
-      control,
-      name: "iconoMeta",
-    }) || "";
+  const iconoSeleccionado = useWatch({
+    control,
+    name: "iconoMeta",
+  }) as IconosType;
   const Icon = iconos[iconoSeleccionado];
   return (
     <Sheet open={open} onOpenChange={setOpen}>

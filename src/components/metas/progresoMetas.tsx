@@ -1,7 +1,7 @@
 import { Progress } from "@/components/ui/progress";
 import { formatoDivisa } from "@/helpers/formatoDivisa";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { iconos } from "@/lib/iconos";
+import { iconos, type IconosType } from "@/lib/iconos";
 import { useAppContext } from "@/context/useAppContext";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,7 @@ import { useNavigate } from "react-router-dom";
 function ProgresoMetas() {
   const { metas } = useAppContext();
   const navigate = useNavigate();
-  const getIcono = (iconoMeta: string) => {
-    if (iconoMeta === "") return;
+  const getIcono = (iconoMeta: IconosType) => {
     const Icon = iconos[iconoMeta];
     return <Icon />;
   };
@@ -28,7 +27,7 @@ function ProgresoMetas() {
             <div className="flex flex-col gap-2" key={meta.idMeta}>
               {index > 0 && <Separator />}
               <div className="flex gap-2 pb-2">
-                {getIcono(meta.icono)}
+                {meta.icono && getIcono(meta.icono)}
                 <span>{meta.nombre}</span>
               </div>
               <span>{`${meta.progreso}%`}</span>

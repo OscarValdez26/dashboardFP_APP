@@ -1,14 +1,23 @@
 import { Progress } from "@/components/ui/progress";
 import { formatoDivisa } from "@/helpers/formatoDivisa";
-import { iconos } from "@/lib/iconos";
+import { iconos, type IconosType } from "@/lib/iconos";
 import { useAppContext } from "@/context/useAppContext";
 import { Separator } from "@/components/ui/separator";
 import { useEffect } from "react";
 
-function MetasReporte({ setMetaTop }) {
+type Props = {
+  setMetaTop: React.Dispatch<React.SetStateAction<MetaTop>>;
+};
+
+type MetaTop = {
+  nombre: string;
+  restante: number;
+  progreso: string;
+};
+
+function MetasReporte({ setMetaTop }: Props) {
   const { metas } = useAppContext();
-  const getIcono = (iconoMeta: string) => {
-    if (iconoMeta === "") return;
+  const getIcono = (iconoMeta: IconosType) => {
     const Icon = iconos[iconoMeta];
     return <Icon />;
   };
@@ -21,13 +30,16 @@ function MetasReporte({ setMetaTop }) {
     if (!metas) return;
     if (metas.length > 0) {
       const dato = [...metas];
-      dato.sort((a, b) => b.fechaLimite - a.fechaLimite);
-      const top = {
-        nombre: dato[0].nombre,
-        restante: getDias(dato[0].fechaLimite),
-        progreso: dato[0].progreso,
-      };
-      setMetaTop(top);
+      dato.sort(
+        (a, b) =>
+          new Date(b.fechaLimite).getTime() - new Date(a.fechaLimite).getTime(),
+      );
+      if (dato[0])
+        setMetaTop({
+          nombre: dato[0].nombre,
+          restante: getDias(dato[0].fechaLimite),
+          progreso: dato[0].progreso,
+        });
     }
   }, [metas]);
   return (
@@ -39,7 +51,7 @@ function MetasReporte({ setMetaTop }) {
           <div className="flex flex-col gap-4 pb-4 w-full" key={meta.idMeta}>
             {index > 0 && <Separator className="" />}
             <div className="flex gap-2 pb-2">
-              {getIcono(meta.icono)}
+              {meta.icono && getIcono(meta.icono)}
               <span className="font-medium">{meta.nombre}</span>
             </div>
             <div className="flex justify-between text-sm">

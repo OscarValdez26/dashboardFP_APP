@@ -28,7 +28,7 @@ import z from "zod";
 import IconSelector from "@/components/generic/iconSelector";
 import { Textarea } from "@/components/ui/textarea";
 import InputCalendario from "@/components/generic/inputCalendario";
-import { iconos } from "@/lib/iconos";
+import { iconos, type IconosType } from "@/lib/iconos";
 import type { MetasType } from "@/types";
 
 type Props = {
@@ -106,11 +106,10 @@ function EditarMeta({ meta }: Props) {
       setMensaje(resultado.data.message);
     }
   };
-  const iconoSeleccionado =
-    useWatch({
-      control,
-      name: "iconoMeta",
-    }) || "";
+  const iconoSeleccionado: IconosType = useWatch({
+    control,
+    name: "iconoMeta",
+  }) as IconosType;
   const Icon = iconos[iconoSeleccionado];
   const reiniciar = () => {
     setMensaje("");

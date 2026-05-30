@@ -27,19 +27,27 @@ import { fechaHora, fechaHoraCorta } from "@/helpers/formatoFecha";
 import { formatoDivisa } from "@/helpers/formatoDivisa";
 import { Spinner } from "../ui/spinner";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface DataTableProps {
+  columns: ColumnDef<DatosTablaType>[];
+  data: DatosTablaType[];
 }
 
-function TablaMovimientos<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+type DatosTablaType = {
+  cuenta: string;
+  tipoMovimiento: string;
+  categoriaMovimiento: string;
+  descripcionMovimiento: string;
+  cantidadMovimiento: string;
+  fechaMovimiento: string;
+  color?: string;
+};
+
+function TablaMovimientos({ columns, data }: DataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [loading, setLoading] = useState(false);
-  const table = useReactTable({
+
+  const table = useReactTable<DatosTablaType>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -61,7 +69,7 @@ function TablaMovimientos<TData, TValue>({
       Tipo: row.original.tipoMovimiento,
       Categoría: row.original.categoriaMovimiento,
       Descripción: row.original.descripcionMovimiento,
-      Cantidad: formatoDivisa(row.original.cantidadMovimiento),
+      Cantidad: formatoDivisa(Number(row.original.cantidadMovimiento)),
       Fecha: fechaHora(row.original.fechaMovimiento),
     }));
 

@@ -3,10 +3,10 @@ import type { CategoriasType, ResumenCuentasType } from "@/types";
 import type { MetasType } from "@/types/metas";
 
 type AppContextType = {
-  categorias: CategoriasType[] | null;
-  setCategorias: React.Dispatch<React.SetStateAction<CategoriasType[] | null>>;
-  cuentas: ResumenCuentasType[] | null;
-  setCuentas: React.Dispatch<React.SetStateAction<ResumenCuentasType[] | null>>;
+  categorias: CategoriasType[];
+  setCategorias: React.Dispatch<React.SetStateAction<CategoriasType[]>>;
+  cuentas: ResumenCuentasType[];
+  setCuentas: React.Dispatch<React.SetStateAction<ResumenCuentasType[]>>;
   metas: MetasType[];
   setMetas: React.Dispatch<React.SetStateAction<MetasType[]>>;
   obtenerCuentas: () => Promise<void>;

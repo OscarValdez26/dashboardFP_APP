@@ -18,14 +18,30 @@ type HistorialType = {
   antepenultimoMes: HistorialItem[];
 };
 
-function Historial({ setCarteraAnterior }) {
-  const [historial, setHistorial] = useState<HistorialType | null>(null);
+type Props = {
+  setCarteraAnterior: React.Dispatch<React.SetStateAction<CuentaHistorial>>;
+};
+
+type CuentaHistorial = {
+  mes: string;
+  tipoCuenta: string;
+  ingresos: string;
+  gastos: string;
+  balance: string;
+};
+
+function Historial({ setCarteraAnterior }: Props) {
+  const [historial, setHistorial] = useState<HistorialType>({
+    ultimoMes: [],
+    penultimoMes: [],
+    antepenultimoMes: [],
+  });
   useEffect(() => {
     const obtenerHistorial = async () => {
       const resultado = await apiRequest("GET", "cuentas/historial");
       if (resultado.success) {
         const anterior = resultado.data.result.ultimoMes.find(
-          (cuenta) => cuenta.tipoCuenta === "cartera",
+          (cuenta: HistorialItem) => cuenta.tipoCuenta === "cartera",
         );
         if (anterior) setCarteraAnterior(anterior);
         setHistorial(resultado.data.result);

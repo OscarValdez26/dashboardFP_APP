@@ -17,7 +17,17 @@ type DatosChartType = {
   fill: string;
 };
 
-function GastosReporte({ setCategoriaTop }) {
+type Props = {
+  setCategoriaTop: React.Dispatch<React.SetStateAction<CategoriaTop>>;
+};
+
+type CategoriaTop = {
+  categoria: string;
+  totalGastado: number;
+  fill: string;
+};
+
+function GastosReporte({ setCategoriaTop }: Props) {
   const [chartData, setChartData] = useState<DatosChartType[]>([]);
   const [chartConfig, setChartConfig] = useState<ChartConfig>({});
 

@@ -25,10 +25,8 @@ type Gastos = {
 
 function PresupuestosCards() {
   const { cuentas } = useAppContext();
-  const [presupuestos, setPresupuestos] = useState<PresupuestosType[] | null>(
-    null,
-  );
-  const [gastos, setGastos] = useState<Gastos[] | null>(null);
+  const [presupuestos, setPresupuestos] = useState<PresupuestosType[]>([]);
+  const [gastos, setGastos] = useState<Gastos[]>([]);
   const cartera = useMemo(
     () => cuentas?.find((cuenta) => cuenta.tipo === "cartera"),
     [cuentas],
@@ -69,32 +67,32 @@ function PresupuestosCards() {
       return resultado.data.result;
     }
   };
+
+  const obtenerDatos = async () => {
+    const [p, g] = await Promise.all([obtenerPresupuestos(), obtenerGastos()]);
+    const datos = p.map((dato: PresupuestosType) => ({
+      ...dato,
+      porcentaje: getValue(
+        dato.categoria,
+        dato.cantidadPresupuesto,
+        dato.tipoPresupuesto,
+        g,
+      ),
+    }));
+    setGastos(g);
+    setPresupuestos(datos);
+  };
   useEffect(() => {
     if (!cartera) return;
-    const obtenerDatos = async () => {
-      const [p, g] = await Promise.all([
-        obtenerPresupuestos(),
-        obtenerGastos(),
-      ]);
-      const datos = p.map((dato: PresupuestosType) => ({
-        ...dato,
-        porcentaje: getValue(
-          dato.categoria,
-          dato.cantidadPresupuesto,
-          dato.tipoPresupuesto,
-          g,
-        ),
-      }));
-      setGastos(g);
-      setPresupuestos(datos);
+    const obtener = async () => {
+      await obtenerDatos();
     };
-
-    obtenerDatos();
+    obtener();
   }, [cartera]);
   return (
     <div>
       <div className="flex justify-end p-4 mt-8">
-        <NuevoPresupuesto obtenerPresupuestos={obtenerPresupuestos} />
+        <NuevoPresupuesto obtenerDatos={obtenerDatos} />
       </div>
       {presupuestos?.length === 0 && (
         <div className="flex justify-center items-center pt-16 font-normal">

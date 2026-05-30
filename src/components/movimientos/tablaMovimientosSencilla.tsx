@@ -15,12 +15,12 @@ import { Badge } from "@/components/ui/badge";
 import { formatoDivisa, formatoDivisaCorto } from "@/helpers/formatoDivisa";
 import { useMobile } from "@/hooks/useMobile";
 import type { MovimientosType } from "@/types";
+import { useAppContext } from "@/context/useAppContext";
 
 function TablaMovimientosSencilla() {
   const isMobile = useMobile();
-  const [movimientos, setMovimientos] = useState<MovimientosType[] | null>(
-    null,
-  );
+  const [movimientos, setMovimientos] = useState<MovimientosType[]>([]);
+  const { cuentas } = useAppContext();
 
   useEffect(() => {
     const obtenerMovimientos = async () => {
@@ -57,14 +57,14 @@ function TablaMovimientosSencilla() {
       }
     };
     obtenerMovimientos();
-  }, []);
+  }, [cuentas]);
 
   return (
     <div className="flex flex-col items-center text-center p-4">
       <Label className="text-md p-8">Ultimos movimientos</Label>
       {!isMobile && (
         <Table>
-          {movimientos?.length === 0 && (
+          {movimientos.length === 0 && (
             <TableCaption>No hay movimientos recientes</TableCaption>
           )}
           <TableHeader>
@@ -78,7 +78,7 @@ function TablaMovimientosSencilla() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {movimientos &&
+            {movimientos.length > 0 &&
               movimientos.map((movimiento: MovimientosType, index: number) => (
                 <TableRow key={index}>
                   <TableCell className="text-start">
@@ -108,7 +108,7 @@ function TablaMovimientosSencilla() {
       )}
       {isMobile && (
         <Table>
-          {movimientos?.length === 0 && (
+          {movimientos.length === 0 && (
             <TableCaption>No hay movimientos recientes</TableCaption>
           )}
           <TableHeader>
@@ -122,7 +122,7 @@ function TablaMovimientosSencilla() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {movimientos &&
+            {movimientos.length > 0 &&
               movimientos.map((movimiento: MovimientosType, index: number) => (
                 <TableRow key={index}>
                   <TableCell className="text-start">

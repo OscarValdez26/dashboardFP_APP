@@ -70,6 +70,7 @@ function NuevaMeta() {
     },
   });
   const onSubmit = async (data: NuevaMetaForm) => {
+    setMensaje("Guardando meta");
     const nuevaMeta = {
       ...data,
       fechaInicio: new Date().toISOString(),
@@ -78,11 +79,10 @@ function NuevaMeta() {
       cantidadObjetivo: Number(data.cantidadObjetivo),
     };
     const resultado = await apiRequest("POST", "metas/nueva", nuevaMeta);
+    setMensaje(resultado.data.message);
     if (resultado.success) {
-      setMensaje(resultado.data.message);
+      reset();
       await obtenerMetas();
-    } else {
-      setMensaje(resultado.data.message);
     }
   };
   const iconoSeleccionado = useWatch({

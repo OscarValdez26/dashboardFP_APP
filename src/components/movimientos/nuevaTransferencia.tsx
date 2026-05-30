@@ -79,6 +79,7 @@ function NuevaTransferencia() {
   });
 
   const onSubmit = async (data: NuevaTransferenciaForm) => {
+    setMensaje("Guardando transferencia");
     const datos: PostMovimiento = {
       tipoMovimiento: "transferencia",
       descripcionMovimiento: data.descripcionMovimiento,
@@ -87,8 +88,12 @@ function NuevaTransferencia() {
       cuentaDestino: Number(data.cuentaDestino),
     };
     const respuesta = await apiRequest("POST", "movimientos/nuevo", datos);
+
     setMensaje(respuesta.data.message);
-    await obtenerCuentas();
+    if (respuesta.success) {
+      reset();
+      await obtenerCuentas();
+    }
   };
   return (
     <Sheet>

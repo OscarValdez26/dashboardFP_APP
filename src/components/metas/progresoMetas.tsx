@@ -4,20 +4,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { iconos, type IconosType } from "@/lib/iconos";
 import { useAppContext } from "@/context/useAppContext";
 import { Separator } from "@/components/ui/separator";
-import { useNavigate } from "react-router-dom";
 
 function ProgresoMetas() {
   const { metas } = useAppContext();
-  const navigate = useNavigate();
   const getIcono = (iconoMeta: IconosType) => {
     const Icon = iconos[iconoMeta];
     return <Icon />;
   };
+  const getColor = (progreso: number) => {
+    if (progreso < 30) return "bg-red-500";
+    if (progreso < 70) return "bg-yellow-500";
+    if (progreso >= 70 && progreso < 100) return "bg-emerald-500";
+    if (progreso >= 100) return "bg-blue-500";
+    return "bg-primary";
+  };
   return (
-    <Card
-      className="card-principal px-4 hover:cursor-pointer"
-      onClick={() => navigate("/metas")}
-    >
+    <Card className="card-principal px-4">
       <CardHeader>
         <CardTitle className="py-4">Mis metas</CardTitle>
       </CardHeader>
@@ -31,7 +33,10 @@ function ProgresoMetas() {
                 <span>{meta.nombre}</span>
               </div>
               <span>{`${meta.progreso}%`}</span>
-              <Progress value={Number(meta.progreso)} color="bg-primary" />
+              <Progress
+                value={Number(meta.progreso)}
+                color={getColor(Number(meta.progreso))}
+              />
               <div className="flex justify-between">
                 <span>{formatoDivisa(Number(meta.saldo))}</span>
                 <span>{formatoDivisa(Number(meta.objetivo))}</span>

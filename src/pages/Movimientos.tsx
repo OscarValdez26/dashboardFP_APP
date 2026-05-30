@@ -29,6 +29,7 @@ function Movimientos() {
       descripcionMovimiento: movimiento.descripcionMovimiento,
       cantidadMovimiento: movimiento.cantidadMovimiento,
       fechaMovimiento: movimiento.fechaMovimiento,
+      color: movimiento.color,
     }));
     setData(nuevosDatos);
   }, [movimientos]);

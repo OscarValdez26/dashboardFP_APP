@@ -34,6 +34,13 @@ function MetasCards() {
       mensaje: randomMensaje("meta", Number(meta.progreso)),
     }));
   }, [metas]);
+  const getColor = (progreso: number) => {
+    if (progreso < 30) return "bg-red-500";
+    if (progreso < 70) return "bg-yellow-500";
+    if (progreso >= 70 && progreso < 100) return "bg-emerald-500";
+    if (progreso >= 100) return "bg-blue-500";
+    return "bg-primary";
+  };
   return (
     //
     <div>
@@ -57,7 +64,10 @@ function MetasCards() {
                 <div className="flex justify-between">
                   <span>{`${meta.progreso}%`}</span>
                 </div>
-                <Progress value={Number(meta.progreso)} />
+                <Progress
+                  value={Number(meta.progreso)}
+                  color={getColor(Number(meta.progreso))}
+                />
                 <div className="flex justify-between">
                   <span>{formatoDivisa(Number(meta.saldo))}</span>
                   <span>{formatoDivisa(Number(meta.objetivo))}</span>

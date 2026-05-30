@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import { useAppContext } from "@/context/useAppContext";
 import { useEffect, useMemo, useState } from "react";
@@ -15,12 +14,9 @@ type Gastos = {
 };
 
 function EstadoPresupuestos() {
-  const navigate = useNavigate();
   const { cuentas } = useAppContext();
-  const [presupuestos, setPresupuestos] = useState<PresupuestosType[] | null>(
-    null,
-  );
-  const [gastos, setGastos] = useState<Gastos[] | null>(null);
+  const [presupuestos, setPresupuestos] = useState<PresupuestosType[]>([]);
+  const [gastos, setGastos] = useState<Gastos[]>([]);
   const cartera = useMemo(
     () => cuentas?.find((cuenta) => cuenta.tipo === "cartera"),
     [cuentas],
@@ -93,15 +89,12 @@ function EstadoPresupuestos() {
     obtenerDatos();
   }, [cartera]);
   return (
-    <Card
-      className="card-principal px-4 hover:cursor-pointer"
-      onClick={() => navigate("/presupuestos")}
-    >
+    <Card className="card-principal px-4">
       <CardHeader>
         <CardTitle className="py-4">Mis presupuestos</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col px-4 gap-4 text-sm font-medium">
-        {presupuestos &&
+        {presupuestos.length > 0 &&
           presupuestos.length > 0 &&
           presupuestos.map((presupuesto, index) => (
             <div
@@ -150,7 +143,7 @@ function EstadoPresupuestos() {
               />
             </div>
           ))}
-        {presupuestos?.length === 0 && (
+        {presupuestos.length === 0 && (
           <div className="w-full h-full flex justify-center items-center font-normal">
             No hay presupuestos asignados
           </div>

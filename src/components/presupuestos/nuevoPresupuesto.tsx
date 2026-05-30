@@ -46,10 +46,10 @@ const nuevoPresupuestoSchema = z.object({
 type NuevoPresupuestoForm = z.infer<typeof nuevoPresupuestoSchema>;
 
 type Props = {
-  obtenerPresupuestos: () => void;
+  obtenerDatos: () => Promise<void>;
 };
 
-function NuevoPresupuesto({ obtenerPresupuestos }: Props) {
+function NuevoPresupuesto({ obtenerDatos }: Props) {
   const { categorias } = useAppContext();
   const [mensaje, setMensaje] = useState("");
   const {
@@ -68,6 +68,7 @@ function NuevoPresupuesto({ obtenerPresupuestos }: Props) {
   });
 
   const onSubmit = async (data: NuevoPresupuestoForm) => {
+    setMensaje("Guardando presupuesto");
     const json = {
       idCategoria: Number(data.idCategoria),
       tipoPresupuesto: data.tipoPresupuesto,
@@ -76,7 +77,10 @@ function NuevoPresupuesto({ obtenerPresupuestos }: Props) {
     console.log(json);
     const resultado = await apiRequest("POST", "presupuestos/nuevo", json);
     setMensaje(resultado.data.message);
-    await obtenerPresupuestos();
+    if (resultado.success) {
+      reset();
+      await obtenerDatos();
+    }
   };
 
   const tipo = useWatch({

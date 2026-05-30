@@ -80,6 +80,7 @@ function NuevoMovimiento() {
   );
 
   const onSubmit = async (data: NuevoMovimientoForm) => {
+    setMensaje("Guardando movimiento");
     const datos: PostMovimiento = {
       categoriaMovimiento: Number(data.categoriaMovimiento),
       tipoMovimiento: categoriaActual!.tipoCategoria,
@@ -92,7 +93,10 @@ function NuevoMovimiento() {
       datos.cuentaOrigen = Number(data.cuenta);
     const respuesta = await apiRequest("POST", "movimientos/nuevo", datos);
     setMensaje(respuesta.data.message);
-    await obtenerCuentas();
+    if (respuesta.success) {
+      reset();
+      await obtenerCuentas();
+    }
   };
   return (
     <Sheet>

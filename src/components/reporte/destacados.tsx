@@ -90,7 +90,8 @@ function Destacados({
             </span>
           </li>
         )}
-        {cartera.tipo === "cartera" &&
+        {cartera &&
+          cartera.tipo === "cartera" &&
           carteraAnterior.tipoCuenta === "cartera" && (
             <li className="pb-2">
               Tus ingresos son{" "}
@@ -100,7 +101,8 @@ function Destacados({
               que el mes anterior
             </li>
           )}
-        {cartera.tipo === "cartera" &&
+        {cartera &&
+          cartera.tipo === "cartera" &&
           carteraAnterior.tipoCuenta === "cartera" && (
             <li className="pb-2">
               Tus gastos son{" "}
@@ -110,20 +112,26 @@ function Destacados({
               que el mes anterior
             </li>
           )}
-        {cartera.tipo === "cartera" && Number(cartera.gastos) !== 0 && (
-          <li className="pb-2">
-            Tu promedio de gasto diario es de{" "}
-            <span className="font-semibold">{getPromedio(cartera.gastos)}</span>
-          </li>
-        )}
-        {cartera.tipo === "cartera" && Number(cartera.ingresos) !== 0 && (
-          <li className="pb-2">
-            Tu tasa de ahorro de este mes es de{" "}
-            <span className="font-semibold">
-              {getTasaAhorro(cartera.ingresos, cartera.gastos)}
-            </span>
-          </li>
-        )}
+        {cartera &&
+          cartera.tipo === "cartera" &&
+          Number(cartera.gastos) !== 0 && (
+            <li className="pb-2">
+              Tu promedio de gasto diario es de{" "}
+              <span className="font-semibold">
+                {getPromedio(cartera.gastos)}
+              </span>
+            </li>
+          )}
+        {cartera &&
+          cartera.tipo === "cartera" &&
+          Number(cartera.ingresos) !== 0 && (
+            <li className="pb-2">
+              Tu tasa de ahorro de este mes es de{" "}
+              <span className="font-semibold">
+                {getTasaAhorro(cartera.ingresos, cartera.gastos)}
+              </span>
+            </li>
+          )}
       </ul>
     </div>
   );

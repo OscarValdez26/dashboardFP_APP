@@ -44,8 +44,12 @@ function ProgresoMetas() {
             </div>
           ))}
         {metas.length === 0 && (
-          <div className="w-full h-full flex justify-center items-center font-normal">
-            No hay metas activas
+          <div className="text-muted-foreground ">
+            <p className="pb-4">Aún no tienes metas establecidas</p>
+            <p>
+              Crea una meta de ahorro en la prestaña "Metas" para visualizar tu
+              progreso
+            </p>
           </div>
         )}
       </CardContent>

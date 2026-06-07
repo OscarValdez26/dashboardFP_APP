@@ -144,8 +144,12 @@ function EstadoPresupuestos() {
             </div>
           ))}
         {presupuestos.length === 0 && (
-          <div className="w-full h-full flex justify-center items-center font-normal">
-            No hay presupuestos asignados
+          <div className="text-muted-foreground ">
+            <p className="pb-4">Aún no tienes presupuestos asignados</p>
+            <p>
+              Crea un presupuesto nuevo en la pestaña "Presupuestos" para saber
+              si tus gastos del mes estan dentro del rango adecuado
+            </p>
           </div>
         )}
       </CardContent>

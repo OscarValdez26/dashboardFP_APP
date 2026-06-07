@@ -65,16 +65,23 @@ function TablaMovimientosSencilla() {
       {!isMobile && (
         <Table>
           {movimientos.length === 0 && (
-            <TableCaption>No hay movimientos recientes</TableCaption>
+            <TableCaption>
+              <p>Aún no hay datos</p>
+              <p className="pb-4">
+                Registra tu primer movimiento para comenzar a analizar tus
+                hábitos financieros
+              </p>
+              <p>(Utiliza el boton menu de la parte superior derecha)</p>
+            </TableCaption>
           )}
           <TableHeader>
             <TableRow>
-              <TableHead>Cuenta</TableHead>
-              <TableHead>Tipo</TableHead>
-              <TableHead>Categoria</TableHead>
-              <TableHead>Descripcion</TableHead>
-              <TableHead>Cantidad</TableHead>
-              <TableHead>Fecha</TableHead>
+              <TableHead className="text-start">Cuenta</TableHead>
+              <TableHead className="text-start">Tipo</TableHead>
+              <TableHead className="text-start">Categoria</TableHead>
+              <TableHead className="text-start">Descripcion</TableHead>
+              <TableHead className="text-end">Cantidad</TableHead>
+              <TableHead className="text-end">Fecha</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -84,7 +91,7 @@ function TablaMovimientosSencilla() {
                   <TableCell className="text-start">
                     {movimiento.cuenta}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-start">
                     <Badge className={movimiento.color}>
                       {movimiento.tipoMovimiento}
                     </Badge>
@@ -109,16 +116,23 @@ function TablaMovimientosSencilla() {
       {isMobile && (
         <Table>
           {movimientos.length === 0 && (
-            <TableCaption>No hay movimientos recientes</TableCaption>
+            <TableCaption>
+              <p>Aún no hay datos</p>
+              <p className="pb-4">
+                Registra tu primer movimiento para comenzar a analizar tus
+                hábitos financieros
+              </p>
+              <p>(Utiliza el boton menu de la parte superior derecha)</p>
+            </TableCaption>
           )}
           <TableHeader>
             <TableRow>
-              <TableHead>Cuenta</TableHead>
-              <TableHead>Tipo</TableHead>
-              {/* <TableHead>Categoria</TableHead> */}
+              <TableHead className="text-start">Cuenta</TableHead>
+              <TableHead className="text-start">Tipo</TableHead>
+              <TableHead className="text-start">Categoria</TableHead>
               {/* <TableHead>Descripcion</TableHead> */}
-              <TableHead>Cantidad</TableHead>
-              <TableHead>Fecha</TableHead>
+              <TableHead className="text-end">Cantidad</TableHead>
+              <TableHead className="text-end">Fecha</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -128,15 +142,15 @@ function TablaMovimientosSencilla() {
                   <TableCell className="text-start">
                     {movimiento.cuenta}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-start">
                     <Badge className={movimiento.color}>
                       {movimiento.tipoMovimiento}
                     </Badge>
                   </TableCell>
+                  <TableCell className="text-start">
+                    {movimiento.categoriaMovimiento}
+                  </TableCell>
                   {/* <TableCell className="text-start">
-                      {movimiento.categoriaMovimiento}
-                    </TableCell>
-                    <TableCell className="text-start">
                       {movimiento.descripcionMovimiento}
                     </TableCell> */}
                   <TableCell className="text-end">

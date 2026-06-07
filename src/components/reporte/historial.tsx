@@ -3,6 +3,7 @@ import { formatoDivisa } from "@/helpers/formatoDivisa";
 import { useEffect, useState } from "react";
 import { fechaSinDia } from "@/helpers/formatoFecha";
 import { Separator } from "../ui/separator";
+import { useMobile } from "@/hooks/useMobile";
 
 type HistorialItem = {
   mes: string;
@@ -20,6 +21,7 @@ type HistorialType = {
 
 type Props = {
   setCarteraAnterior: React.Dispatch<React.SetStateAction<CuentaHistorial>>;
+  isExportable: boolean;
 };
 
 type CuentaHistorial = {
@@ -30,12 +32,15 @@ type CuentaHistorial = {
   balance: string;
 };
 
-function Historial({ setCarteraAnterior }: Props) {
+function Historial({ setCarteraAnterior, isExportable }: Props) {
+  const mobile = useMobile();
+  const isMobile = isExportable ? false : mobile;
   const [historial, setHistorial] = useState<HistorialType>({
     ultimoMes: [],
     penultimoMes: [],
     antepenultimoMes: [],
   });
+
   useEffect(() => {
     const obtenerHistorial = async () => {
       const resultado = await apiRequest("GET", "cuentas/historial");
@@ -63,88 +68,166 @@ function Historial({ setCarteraAnterior }: Props) {
         <span className="text-sm font-normal">Incluye transferencias</span>
       </h3>
 
-      <div className="grid grid-cols-4 w-full pb-2">
-        <p>Cuenta</p>
-        {historial && <p>{fechaSinDia(new Date(ultimo).toISOString())}</p>}
-        {historial && <p>{fechaSinDia(new Date(penultimo).toISOString())}</p>}
-        {historial && (
-          <p>{fechaSinDia(new Date(antepenultimo).toISOString())}</p>
-        )}
-      </div>
-      <Separator />
+      {!isMobile && (
+        <div className="w-full">
+          <div className="grid grid-cols-4 w-full pb-2 gap-2">
+            <p>Cuenta</p>
+            {historial && <p>{fechaSinDia(new Date(ultimo).toISOString())}</p>}
+            {historial && (
+              <p>{fechaSinDia(new Date(penultimo).toISOString())}</p>
+            )}
+            {historial && (
+              <p>{fechaSinDia(new Date(antepenultimo).toISOString())}</p>
+            )}
+          </div>
+          <Separator />
 
-      {historial && (
-        <div className="grid grid-cols-4 w-full pt-2">
-          <p>Cartera</p>
-          <p>
-            {formatoDivisa(
-              historial.ultimoMes.find((dato) => dato.tipoCuenta === "cartera")
-                ?.balance || 0,
-            )}
-          </p>
-          <p>
-            {formatoDivisa(
-              historial.penultimoMes.find(
-                (dato) => dato.tipoCuenta === "cartera",
-              )?.balance || 0,
-            )}
-          </p>
-          <p>
-            {formatoDivisa(
-              historial.antepenultimoMes.find(
-                (dato) => dato.tipoCuenta === "cartera",
-              )?.balance || 0,
-            )}
-          </p>
+          {historial && (
+            <div className="grid grid-cols-4 w-full pt-2 gap-2">
+              <p>Cartera</p>
+              <p>
+                {formatoDivisa(
+                  historial.ultimoMes.find(
+                    (dato) => dato.tipoCuenta === "cartera",
+                  )?.balance || 0,
+                )}
+              </p>
+              <p>
+                {formatoDivisa(
+                  historial.penultimoMes.find(
+                    (dato) => dato.tipoCuenta === "cartera",
+                  )?.balance || 0,
+                )}
+              </p>
+              <p>
+                {formatoDivisa(
+                  historial.antepenultimoMes.find(
+                    (dato) => dato.tipoCuenta === "cartera",
+                  )?.balance || 0,
+                )}
+              </p>
+            </div>
+          )}
+          {historial && (
+            <div className="grid grid-cols-4 w-full pt-2 gap-2">
+              <p>Ahorro</p>
+              <p>
+                {formatoDivisa(
+                  historial.ultimoMes.find(
+                    (dato) => dato.tipoCuenta === "ahorro",
+                  )?.balance || 0,
+                )}
+              </p>
+              <p>
+                {formatoDivisa(
+                  historial.penultimoMes.find(
+                    (dato) => dato.tipoCuenta === "ahorro",
+                  )?.balance || 0,
+                )}
+              </p>
+              <p>
+                {formatoDivisa(
+                  historial.antepenultimoMes.find(
+                    (dato) => dato.tipoCuenta === "ahorro",
+                  )?.balance || 0,
+                )}
+              </p>
+            </div>
+          )}
+          {historial && (
+            <div className="grid grid-cols-4 w-full pt-2 gap-2">
+              <p>Metas</p>
+              <p>
+                {formatoDivisa(
+                  historial.ultimoMes.find((dato) => dato.tipoCuenta === "meta")
+                    ?.balance || 0,
+                )}
+              </p>
+              <p>
+                {formatoDivisa(
+                  historial.penultimoMes.find(
+                    (dato) => dato.tipoCuenta === "meta",
+                  )?.balance || 0,
+                )}
+              </p>
+              <p>
+                {formatoDivisa(
+                  historial.antepenultimoMes.find(
+                    (dato) => dato.tipoCuenta === "meta",
+                  )?.balance || 0,
+                )}
+              </p>
+            </div>
+          )}
         </div>
       )}
-      {historial && (
-        <div className="grid grid-cols-4 w-full pt-2">
-          <p>Ahorro</p>
-          <p>
-            {formatoDivisa(
-              historial.ultimoMes.find((dato) => dato.tipoCuenta === "ahorro")
-                ?.balance || 0,
+      {isMobile && (
+        <div className="w-full">
+          <div className="grid grid-cols-3 w-full pb-2 gap-2">
+            <p>Cuenta</p>
+            {historial && <p>{fechaSinDia(new Date(ultimo).toISOString())}</p>}
+            {historial && (
+              <p>{fechaSinDia(new Date(penultimo).toISOString())}</p>
             )}
-          </p>
-          <p>
-            {formatoDivisa(
-              historial.penultimoMes.find(
-                (dato) => dato.tipoCuenta === "ahorro",
-              )?.balance || 0,
-            )}
-          </p>
-          <p>
-            {formatoDivisa(
-              historial.antepenultimoMes.find(
-                (dato) => dato.tipoCuenta === "ahorro",
-              )?.balance || 0,
-            )}
-          </p>
-        </div>
-      )}
-      {historial && (
-        <div className="grid grid-cols-4 w-full pt-2">
-          <p>Metas</p>
-          <p>
-            {formatoDivisa(
-              historial.ultimoMes.find((dato) => dato.tipoCuenta === "meta")
-                ?.balance || 0,
-            )}
-          </p>
-          <p>
-            {formatoDivisa(
-              historial.penultimoMes.find((dato) => dato.tipoCuenta === "meta")
-                ?.balance || 0,
-            )}
-          </p>
-          <p>
-            {formatoDivisa(
-              historial.antepenultimoMes.find(
-                (dato) => dato.tipoCuenta === "meta",
-              )?.balance || 0,
-            )}
-          </p>
+          </div>
+          <Separator />
+
+          {historial && (
+            <div className="grid grid-cols-3 w-full pt-2 gap-2">
+              <p>Cartera</p>
+              <p>
+                {formatoDivisa(
+                  historial.ultimoMes.find(
+                    (dato) => dato.tipoCuenta === "cartera",
+                  )?.balance || 0,
+                )}
+              </p>
+              <p>
+                {formatoDivisa(
+                  historial.penultimoMes.find(
+                    (dato) => dato.tipoCuenta === "cartera",
+                  )?.balance || 0,
+                )}
+              </p>
+            </div>
+          )}
+          {historial && (
+            <div className="grid grid-cols-3 w-full pt-2 gap-2">
+              <p>Ahorro</p>
+              <p>
+                {formatoDivisa(
+                  historial.ultimoMes.find(
+                    (dato) => dato.tipoCuenta === "ahorro",
+                  )?.balance || 0,
+                )}
+              </p>
+              <p>
+                {formatoDivisa(
+                  historial.penultimoMes.find(
+                    (dato) => dato.tipoCuenta === "ahorro",
+                  )?.balance || 0,
+                )}
+              </p>
+            </div>
+          )}
+          {historial && (
+            <div className="grid grid-cols-3 w-full pt-2 gap-2">
+              <p>Metas</p>
+              <p>
+                {formatoDivisa(
+                  historial.ultimoMes.find((dato) => dato.tipoCuenta === "meta")
+                    ?.balance || 0,
+                )}
+              </p>
+              <p>
+                {formatoDivisa(
+                  historial.penultimoMes.find(
+                    (dato) => dato.tipoCuenta === "meta",
+                  )?.balance || 0,
+                )}
+              </p>
+            </div>
+          )}
         </div>
       )}
     </div>

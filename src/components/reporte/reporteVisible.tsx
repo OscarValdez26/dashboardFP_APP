@@ -1,13 +1,14 @@
 import SaldoReporte from "@/components/cuentas/saldoReporte";
 import GastosReporte from "@/components/gastos/gastosReporte";
 import { fechaCorta } from "@/helpers/formatoFecha";
-import MetasReporte from "@/components/metas/metasReporte";
-import PresupuestosReporte from "@/components/presupuestos/presupuestosReporte";
 import Historial from "@/components/reporte/historial";
 import { useEffect, useState } from "react";
 import Destacados from "./destacados";
 import { useAppContext } from "@/context/useAppContext";
 import type { ResumenCuentasType } from "@/types";
+import MetasReporte from "../metas/metasReporte";
+import PresupuestosReporte from "../presupuestos/presupuestosReporte";
+import { useMobile } from "@/hooks/useMobile";
 
 type CategoriaTop = {
   categoria: string;
@@ -37,8 +38,9 @@ type CuentaHistorial = {
   balance: string;
 };
 
-function ReporteGeneral() {
+function ReporteVisible() {
   const { cuentas } = useAppContext();
+  const isMobile = useMobile();
   const [categoriaTop, setCategoriaTop] = useState<CategoriaTop>({
     categoria: "",
     totalGastado: 0,
@@ -83,22 +85,25 @@ function ReporteGeneral() {
     const cuenta = cuentas?.find((cuenta) => cuenta.tipo === "cartera");
     setCartera(cuenta!);
   }, [cuentas]);
-
   return (
-    <div className="flex flex-col items-end w-204 p-12 shadow-lg">
-      <div className="py-8">
+    <div className="grid-page">
+      <div className="py-8 col-span-full">
         <h2 className="text-md font-medium">Reporte general de Mis Finanzas</h2>
         <p className="text-sm">{fechaCorta(new Date().toISOString())}</p>
       </div>
 
       <SaldoReporte cartera={cartera} />
-      <GastosReporte setCategoriaTop={setCategoriaTop} altura="h-70" />
-      <Historial setCarteraAnterior={setCarteraAnterior} isExportable={true} />
-      <div className="flex gap-4 w-full mt-24">
-        <MetasReporte setMetaTop={setMetaTop} />
-        {/* <div className="border-r-2"></div> */}
+      {!isMobile && (
+        <GastosReporte setCategoriaTop={setCategoriaTop} altura="h-70" />
+      )}
+      {isMobile && (
+        <GastosReporte setCategoriaTop={setCategoriaTop} altura="h-50" />
+      )}
+      <Historial setCarteraAnterior={setCarteraAnterior} isExportable={false} />
+      {!isMobile && <MetasReporte setMetaTop={setMetaTop} />}
+      {!isMobile && (
         <PresupuestosReporte setPresupuestoTop={setPresupuestoTop} />
-      </div>
+      )}
       <Destacados
         categoriaTop={categoriaTop}
         presupuestoTop={presupuestoTop}
@@ -110,4 +115,4 @@ function ReporteGeneral() {
   );
 }
 
-export default ReporteGeneral;
+export default ReporteVisible;

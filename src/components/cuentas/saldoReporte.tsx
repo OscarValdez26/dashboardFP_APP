@@ -9,7 +9,7 @@ type Props = {
 function SaldoReporte({ cartera }: Props) {
   return (
     <div className="w-full pb-8">
-      {cartera.tipo === "cartera" && (
+      {cartera && cartera.tipo === "cartera" && (
         <div className="flex-flex-col p-4">
           <h3 className="text-md font-medium pb-4">
             Balance de cuenta principal

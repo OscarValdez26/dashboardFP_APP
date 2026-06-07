@@ -59,7 +59,7 @@ function GastosChart() {
     obtenerGastos();
   }, []);
   return (
-    <Card className="card-principal">
+    <Card className="card-principal px-4">
       <CardHeader className="items-center pt-4 pb-0">
         <CardTitle>Gastos del mes</CardTitle>
         <CardDescription>
@@ -114,8 +114,13 @@ function GastosChart() {
           ))}
         </div> */}
         {chartData.length === 0 && (
-          <div className="w-full h-full flex justify-center items-center font-normal">
-            Sin datos
+          <div className="text-muted-foreground flex flex-col justify-start items-center h-full w-full gap-4">
+            <p className="pt-16 pb-4 text-center">
+              Sin gastos registrados este mes
+            </p>
+            <p className="text-center">
+              Recuerda registrar todos tus movimientos financieros desde el menú
+            </p>
           </div>
         )}
       </CardContent>

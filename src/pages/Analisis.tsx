@@ -7,6 +7,7 @@ import jsPDF from "jspdf";
 import { fechaSinDia } from "@/helpers/formatoFecha";
 import { Spinner } from "@/components/ui/spinner";
 import { useMobile } from "@/hooks/useMobile";
+import ReporteVisible from "@/components/reporte/reporteVisible";
 
 function Analisis() {
   const isMobile = useMobile();
@@ -64,16 +65,26 @@ function Analisis() {
           Analisis
         </Label>
       )}
-      <div className="flex justify-end w-204 py-4 mt-8">
+      <div className="flex justify-end p-4 w-full">
         <Button variant="secondary" onClick={exportarPDF}>
           {loading && <Spinner data-icon="inline-start" />}
           {loading ? "Generando" : "Exportar PDF"}
         </Button>
       </div>
 
-      <div ref={reporteRef}>
-        <ReporteGeneral />
+      <div
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          top: 0,
+          width: "816px",
+        }}
+      >
+        <div ref={reporteRef}>
+          <ReporteGeneral />
+        </div>
       </div>
+      <ReporteVisible />
     </div>
   );
 }

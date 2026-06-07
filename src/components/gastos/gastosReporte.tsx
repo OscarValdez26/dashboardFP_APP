@@ -19,6 +19,7 @@ type DatosChartType = {
 
 type Props = {
   setCategoriaTop: React.Dispatch<React.SetStateAction<CategoriaTop>>;
+  altura: string;
 };
 
 type CategoriaTop = {
@@ -27,7 +28,7 @@ type CategoriaTop = {
   fill: string;
 };
 
-function GastosReporte({ setCategoriaTop }: Props) {
+function GastosReporte({ setCategoriaTop, altura }: Props) {
   const [chartData, setChartData] = useState<DatosChartType[]>([]);
   const [chartConfig, setChartConfig] = useState<ChartConfig>({});
 
@@ -62,7 +63,10 @@ function GastosReporte({ setCategoriaTop }: Props) {
       <p className="text-sm">{fechaSinDia(new Date().toISOString())}</p>
       {chartData.length > 0 && (
         <div className="grid grid-cols-2 items-center justify-items-center">
-          <ChartContainer config={chartConfig} className="h-70 aspect-square">
+          <ChartContainer
+            config={chartConfig}
+            className={`${altura} aspect-square`}
+          >
             <PieChart>
               <Pie
                 data={chartData}

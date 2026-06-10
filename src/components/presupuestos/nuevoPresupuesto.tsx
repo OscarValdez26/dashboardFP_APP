@@ -96,7 +96,12 @@ function NuevoPresupuesto({ obtenerDatos }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="w-40 hover:cursor-pointer">Nuevo presupuesto</Button>
+        <Button
+          className="w-40 hover:cursor-pointer"
+          id="boton-nuevo-presupuesto"
+        >
+          Nuevo presupuesto
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

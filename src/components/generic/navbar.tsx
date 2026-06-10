@@ -18,9 +18,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuthContext } from "@/context/useAuthContext";
 import { NavLink, Link } from "react-router-dom";
+import { useAppContext } from "@/context/useAppContext";
+import { useEffect, useState } from "react";
 
 function Navbar() {
   const { user } = useAuthContext();
+  const { tutorialActivo } = useAppContext();
+  const [open, setOpen] = useState(tutorialActivo);
+  useEffect(() => {
+    setOpen(tutorialActivo);
+  }, [tutorialActivo]);
+
   return (
     <div className="flex max-h-20 justify-between w-max-full items-center p-4">
       <Link
@@ -104,9 +112,13 @@ function Navbar() {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="hover:cursor-pointer">
+          <Button
+            variant="outline"
+            className="hover:cursor-pointer"
+            id="boton-menu"
+          >
             Menu
           </Button>
         </DropdownMenuTrigger>

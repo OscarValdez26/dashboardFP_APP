@@ -60,7 +60,10 @@ function TablaMovimientosSencilla() {
   }, [cuentas]);
 
   return (
-    <div className="flex flex-col items-center text-center p-4">
+    <div
+      className="flex flex-col items-center text-center p-4"
+      id="tabla-movimientos"
+    >
       <Label className="text-md p-8">Ultimos movimientos</Label>
       {!isMobile && (
         <Table>

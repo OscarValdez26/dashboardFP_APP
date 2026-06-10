@@ -3,14 +3,13 @@ import type { ReactNode } from "react";
 import { AppContext } from "./appContext";
 import type { CategoriasType, ResumenCuentasType, MetasType } from "@/types";
 import { apiRequest } from "@/api/api";
-// import { useNavigate } from "react-router-dom";
 
 type ProviderProps = {
   children: ReactNode;
 };
 
 function AppProvider({ children }: ProviderProps) {
-  // const navigate = useNavigate();
+  const [tutorialActivo, setTutorialActivo] = useState(false);
   const [categorias, setCategorias] = useState<CategoriasType[]>(() => {
     const listaCategorias = localStorage.getItem("categorias");
     return listaCategorias ? JSON.parse(listaCategorias) : [];
@@ -88,6 +87,8 @@ function AppProvider({ children }: ProviderProps) {
         metas,
         setMetas,
         obtenerMetas,
+        tutorialActivo,
+        setTutorialActivo,
       }}
     >
       {children}

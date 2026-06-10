@@ -89,7 +89,7 @@ function EstadoPresupuestos() {
     obtenerDatos();
   }, [cartera]);
   return (
-    <Card className="card-principal px-4">
+    <Card className="card-principal px-4" id="presupuestos-card">
       <CardHeader>
         <CardTitle className="py-4">Mis presupuestos</CardTitle>
       </CardHeader>

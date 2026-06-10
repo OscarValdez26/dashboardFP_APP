@@ -59,7 +59,7 @@ function GastosChart() {
     obtenerGastos();
   }, []);
   return (
-    <Card className="card-principal px-4">
+    <Card className="card-principal px-4" id="gastos-mes">
       <CardHeader className="items-center pt-4 pb-0">
         <CardTitle>Gastos del mes</CardTitle>
         <CardDescription>

@@ -61,7 +61,7 @@ export function FormularioLogin() {
   };
 
   const changePage = () => {
-    navigate("/register");
+    navigate("/registro");
   };
   return (
     <Card className="w-full max-w-sm">

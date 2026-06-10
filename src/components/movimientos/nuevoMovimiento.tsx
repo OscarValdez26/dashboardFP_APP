@@ -111,7 +111,12 @@ function NuevoMovimiento() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="w-40 hover:cursor-pointer">Nuevo movimiento</Button>
+        <Button
+          className="w-40 hover:cursor-pointer"
+          id="boton-nuevo-movimiento"
+        >
+          Nuevo movimiento
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

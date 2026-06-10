@@ -55,7 +55,7 @@ export function SaldoCard() {
   }, [cuentas]);
 
   return (
-    <Card className="card-principal">
+    <Card className="card-principal" id="saldo-card">
       <CardHeader className="pt-4">
         <CardTitle>Resumen de cuenta</CardTitle>
         <CardDescription>{datos.nombre}</CardDescription>

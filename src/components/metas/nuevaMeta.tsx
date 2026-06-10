@@ -93,7 +93,9 @@ function NuevaMeta() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button className="hover:cursor-pointer">Nueva Meta</Button>
+        <Button className="hover:cursor-pointer" id="boton-nueva-meta">
+          Nueva Meta
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

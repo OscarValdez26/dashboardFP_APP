@@ -19,7 +19,7 @@ function ProgresoMetas() {
     return "bg-primary";
   };
   return (
-    <Card className="card-principal px-4">
+    <Card className="card-principal px-4" id="metas-card">
       <CardHeader>
         <CardTitle className="py-4">Mis metas</CardTitle>
       </CardHeader>

@@ -103,7 +103,11 @@ function NuevaTransferencia() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="secondary" className="w-40 hover:cursor-pointer">
+        <Button
+          variant="secondary"
+          className="w-40 hover:cursor-pointer"
+          id="boton-nueva-transferencia"
+        >
           Nueva Transferencia
         </Button>
       </SheetTrigger>

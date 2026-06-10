@@ -12,6 +12,8 @@ type AppContextType = {
   obtenerCuentas: () => Promise<void>;
   obtenerCategorias: () => Promise<void>;
   obtenerMetas: () => Promise<void>;
+  tutorialActivo: boolean;
+  setTutorialActivo: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);

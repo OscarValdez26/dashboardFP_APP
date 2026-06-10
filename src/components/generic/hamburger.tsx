@@ -14,11 +14,16 @@ import NuevoMovimiento from "@/components/movimientos/nuevoMovimiento";
 import NuevaTransferencia from "@/components/movimientos/nuevaTransferencia";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "@/context/useAuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppContext } from "@/context/useAppContext";
 
 function HamburgerMenu() {
   const { user } = useAuthContext();
-  const [open, setOpen] = useState(false);
+  const { tutorialActivo } = useAppContext();
+  const [open, setOpen] = useState(tutorialActivo);
+  useEffect(() => {
+    setOpen(tutorialActivo);
+  }, [tutorialActivo]);
   return (
     <div className="flex items-center justify-between p-4">
       <Link
@@ -30,7 +35,11 @@ function HamburgerMenu() {
       </Link>
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="hover:cursor-pointer">
+          <Button
+            variant="outline"
+            className="hover:cursor-pointer"
+            id="boton-menu"
+          >
             Menu
           </Button>
         </DropdownMenuTrigger>

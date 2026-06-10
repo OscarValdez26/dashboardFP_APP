@@ -33,7 +33,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAppContext } from "@/context/useAppContext";
 import { apiRequest } from "@/api/api";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const nuevaTransferenciaSchema = z
   .object({
@@ -95,6 +95,11 @@ function NuevaTransferencia() {
       await obtenerCuentas();
     }
   };
+  useEffect(() => {
+    if (cuentas.length === 0) {
+      obtenerCuentas();
+    }
+  }, []);
   return (
     <Sheet>
       <SheetTrigger asChild>

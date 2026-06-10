@@ -10,7 +10,7 @@ type AppContextType = {
   metas: MetasType[];
   setMetas: React.Dispatch<React.SetStateAction<MetasType[]>>;
   obtenerCuentas: () => Promise<void>;
-  // obtenerCategorias: () => Promise<void>;
+  obtenerCategorias: () => Promise<void>;
   obtenerMetas: () => Promise<void>;
 };
 

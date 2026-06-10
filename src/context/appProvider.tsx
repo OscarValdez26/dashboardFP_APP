@@ -84,7 +84,7 @@ function AppProvider({ children }: ProviderProps) {
         cuentas,
         setCuentas,
         obtenerCuentas,
-        // obtenerCategorias,
+        obtenerCategorias,
         metas,
         setMetas,
         obtenerMetas,

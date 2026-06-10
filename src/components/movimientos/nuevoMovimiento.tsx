@@ -34,7 +34,7 @@ import { useAppContext } from "@/context/useAppContext";
 import type { CategoriasType } from "@/types";
 import { apiRequest } from "@/api/api";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const nuevoMovimientoSchema = z.object({
   categoriaMovimiento: z.string("Por favor selecciona una categoría"),
@@ -53,7 +53,8 @@ type PostMovimiento = {
 };
 
 function NuevoMovimiento() {
-  const { categorias, cuentas, obtenerCuentas } = useAppContext();
+  const { categorias, cuentas, obtenerCuentas, obtenerCategorias } =
+    useAppContext();
   const [mensaje, setMensaje] = useState("");
   const {
     register,
@@ -78,6 +79,15 @@ function NuevoMovimiento() {
     (categoria: CategoriasType) =>
       categoria.idCategoria.toString() === categoriaSeleccionada,
   );
+
+  useEffect(() => {
+    if (cuentas.length === 0) {
+      obtenerCuentas();
+    }
+    if (categorias.length === 0) {
+      obtenerCategorias();
+    }
+  }, []);
 
   const onSubmit = async (data: NuevoMovimientoForm) => {
     setMensaje("Guardando movimiento");

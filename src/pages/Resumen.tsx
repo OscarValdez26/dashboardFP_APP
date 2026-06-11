@@ -5,43 +5,67 @@ import ProgresoMetas from "@/components/metas/progresoMetas";
 import { Label } from "@/components/ui/label";
 import EstadoPresupuestos from "@/components/presupuestos/estadoPresupuestos";
 import { useMobile } from "@/hooks/useMobile";
-import { useAppContext } from "@/context/useAppContext";
 import { useEffect } from "react";
-import { iniciarTutorial } from "@/lib/tutorial";
-import DialogoAlerta from "@/components/generic/dialogoAlerta";
 import { useAuthContext } from "@/context/useAuthContext";
+import { useTutorial } from "@/hooks/useTutorial";
+import { MessageCircleQuestionMark } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 function Resumen() {
   const isMobile = useMobile();
-  const { setTutorialActivo } = useAppContext();
   const { user } = useAuthContext();
+  const { iniciarTutorial } = useTutorial();
   useEffect(() => {
     if (!user?.verificado) {
-      setTutorialActivo(true);
       iniciarTutorial();
-      setTimeout(() => {
-        setTutorialActivo(false);
-      }, 60000);
     }
   }, []);
-  const verTutorial = () => {
-    setTutorialActivo(true);
-    iniciarTutorial();
-    setTimeout(() => {
-      setTutorialActivo(false);
-    }, 60000);
-  };
   return (
     <div>
       <div className="flex justify-end px-4">
-        <DialogoAlerta
-          mensajeBoton="?"
-          variant="secondary"
-          titulo="Tutorial"
-          mensaje="¿Desea ver el tutorial?"
-          mensajeAceptar="Ver"
-          onClick={verTutorial}
-        />
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="outline"
+              className="hover:cursor-pointer"
+              size="icon-lg"
+            >
+              <MessageCircleQuestionMark />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Tutorial</AlertDialogTitle>
+              <AlertDialogDescription>
+                ¿Desea ver el tutorial?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="hover:cursor-pointer">
+                Cancelar
+              </AlertDialogCancel>
+              <AlertDialogAction asChild>
+                <Button
+                  onClick={iniciarTutorial}
+                  className="hover:cursor-pointer"
+                >
+                  Ver
+                </Button>
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
       {isMobile && (
         <Label className="text-xl font-semibold p-4 justify-center">
